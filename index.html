@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria Steger Media | App-Entwicklung Stuttgart</title>
+    <meta name="description" content="Preisgekrönte App-Entwicklung aus Stuttgart. Wir verwandeln komplexe Ideen in intuitive mobile Erlebnisse. iOS, Android & Cross-Platform.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette: Deep Void Black with Electric Lime & Lavender Haze */
+            --bg-body: #050505;
+            --bg-card: #0F0F11;
+            --text-main: #E0E0E0;
+            --text-muted: #888890;
+            --accent-lime: #D4FF00;
+            --accent-purple: #9D8CFF;
+            --border-light: rgba(255, 255, 255, 0.08);
+            
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'Manrope', sans-serif;
+            
+            --spacing-container: 1400px;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* RESET & BASE */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 60ch;
+        }
+
+        /* UTILITIES */
+        .container {
+            width: 90%;
+            max-width: var(--spacing-container);
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--accent-lime);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 255, 0, 0.2);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-light);
+            color: #fff;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            border-color: #fff;
+            background: #fff;
+            color: #000;
+        }
+
+        /* HEADER */
+        header {
+            padding: 2rem 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-lime);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--accent-lime);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* MOBILE MENU TOGGLE (Hidden on desktop) */
+        .menu-toggle {
+            display: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        /* Abstract Background Glow */
+        .glow-bg {
+            position: absolute;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(157,140,255,0.15) 0%, rgba(5,5,5,0) 70%);
+            top: -20%;
+            right: -10%;
+            z-index: -1;
+            filter: blur(80px);
+            animation: pulse 10s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 span {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+        }
+
+        .hero-text h1 em {
+            font-style: normal;
+            color: var(--accent-lime);
+        }
+
+        .hero-desc {
+            margin: 2rem 0 3rem 0;
+            font-size: 1.25rem;
+            line-height: 1.8;
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 1.5rem;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        /* Glassmorphism Card in Hero */
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transform: rotate(-3deg);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: rotate(0deg) scale(1.02);
+            border-color: var(--accent-purple);
+        }
+
+        .code-snippet {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+
+        /* SEKTION: PHILOSOPHIE (Marquee) */
+        .marquee-section {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee-content span {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            color: #222;
+            margin-right: 4rem;
+            -webkit-text-stroke: 1px var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .marquee-content span.highlight {
+            color: var(--accent-lime);
+            -webkit-text-stroke: 0;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* SEKTION: SERVICES (Bento Grid Layout) */
+        .services {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 350px);
+            gap: 1.5rem;
+        }
+
+        .grid-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-card:hover {
+            border-color: var(--accent-lime);
+            background: #141416;
+        }
+
+        .grid-card h3 {
+            font-size: 1.75rem;
+            color: #fff;
+        }
+
+        .grid-card .icon {
+            font-size: 2rem;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+
+        .grid-card:nth-child(1) { grid-column: span 2; }
+        .grid-card:nth-child(2) { background: linear-gradient(135deg, #1a1a1a 0%, #050505 100%); }
+        .grid-card:nth-child(3) { grid-row: span 2; background: var(--accent-purple); color: #000; }
+        .grid-card:nth-child(3) h3, 
+        .grid-card:nth-child(3) p { color: #000; }
+        .grid-card:nth-child(3) .icon { color: #fff; }
+
+        .card-number {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            position: absolute;
+            bottom: -10px;
+            right: 10px;
+            opacity: 0.1;
+            font-weight: 800;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 6rem 0 2rem 0;
+            border-top: 1px solid var(--border-light);
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand h4 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .footer-col h5 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-lime);
+            padding-left: 5px;
+        }
+
+        .address-box {
+            font-style: normal;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .bottom-bar {
+            border-top: 1px solid var(--border-light);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            h1 { font-size: 4rem; }
+            .grid-layout {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+            }
+            .grid-card:nth-child(1) { grid-column: span 1; }
+            .grid-card:nth-child(3) { grid-row: span 1; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Simplified mobile menu */
+            .menu-toggle { display: block; }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .stat-card { transform: rotate(0); margin-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    MS<span>M</span> Media
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="ueber-uns.html">Über uns</a></li>
+                    <li><a href="leistungen.html">Leistungen</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+                <div class="menu-toggle">☰</div>
+                <a href="kontakt.html" class="btn btn-outline" style="display: none; @media(min-width: 768px){display:inline-flex;}">Projekt starten</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="glow-bg"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="code-snippet">&lt;Hello World /&gt;</div>
+                        <h1>
+                            Digitale<br>
+                            <span>Zukunft</span><br>
+                            <em>Coden.</em>
+                        </h1>
+                        <p class="hero-desc">
+                            Maria Steger Media entwickelt nicht nur Apps. Wir schaffen nahtlose Ökosysteme für die Hosentasche. Native Performance trifft auf visionäres Design – direkt aus Stuttgart.
+                        </p>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <a href="leistungen.html" class="btn btn-primary">Unsere Expertise</a>
+                            <a href="ueber-uns.html" class="btn btn-outline">Über das Studio</a>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <div class="stat-card">
+                            <h3>Next Level Mobile</h3>
+                            <p style="margin-top: 1rem; color: rgba(255,255,255,0.7);">
+                                Wir verbinden Ästhetik mit robuster Architektur. Keine Templates, keine Kompromisse. Nur sauberer Code für skalierbare Lösungen.
+                            </p>
+                            <div style="margin-top: 2rem; display: flex; gap: 1rem; align-items: center;">
+                                <div style="width: 40px; height: 40px; background: var(--accent-lime); border-radius: 50%;"></div>
+                                <div>
+                                    <span style="display: block; font-weight: bold; color: #fff;">100% Native</span>
+                                    <span style="font-size: 0.8rem; color: #888;">Swift & Kotlin Expertinnen</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee / Trenner -->
+        <div class="marquee-section">
+            <div class="marquee-content">
+                <span>iOS Development</span>
+                <span class="highlight">User Experience</span>
+                <span>Android Systems</span>
+                <span>Backend Architecture</span>
+                <span>Interface Design</span>
+                <span class="highlight">Innovation</span>
+                <span>iOS Development</span>
+                <span class="highlight">User Experience</span>
+            </div>
+        </div>
+
+        <!-- Services Section (Bento Grid) -->
+        <section class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Wir sprechen <span style="color: var(--accent-purple);">Code</span><br>und Design.</h2>
+                    <p>Ein ganzheitlicher Ansatz für Ihre App-Idee. Von der ersten Skizze bis zum App Store Release.</p>
+                </div>
+
+                <div class="grid-layout">
+                    <!-- Card 1 -->
+                    <article class="grid-card">
+                        <div class="icon"></div>
+                        <div>
+                            <h3>Native iOS & Android</h3>
+                            <p style="margin-top: 1rem;">Hochperformante Anwendungen mit Swift und Kotlin. Wir nutzen die volle Power der Gerätehardware für ein unvergleichliches Nutzererlebnis.</p>
+                        </div>
+                        <span class="card-number">01</span>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="grid-card">
+                        <div class="icon">❖</div>
+                        <div>
+                            <h3>UI/UX Design</h3>
+                            <p style="margin-top: 1rem;">Design, das funktioniert. Wireframing, Prototyping und High-Fidelity Interfaces, die Nutzer lieben lernen.</p>
+                        </div>
+                        <span class="card-number">02</span>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="grid-card">
+                        <div class="icon">⚡</div>
+                        <div>
+                            <h3>Backend & Cloud</h3>
+                            <p style="margin-top: 1rem; color: rgba(0,0,0,0.7);">Skalierbare Server-Architekturen. Wir sorgen dafür, dass Ihre App auch bei Millionen Nutzern stabil läuft.</p>
+                            <a href="leistungen.html" style="margin-top: 2rem; display: inline-block; font-weight: 800; text-decoration: underline;">Alle Leistungen ansehen &rarr;</a>
+                        </div>
+                        <span class="card-number">03</span>
+                    </article>
+
+                    <!-- Card 4 -->
+                    <article class="grid-card">
+                        <div class="icon">⚙️</div>
+                        <div>
+                            <h3>Wartung & Support</h3>
+                            <p style="margin-top: 1rem;">Apps leben. Wir kümmern uns um Updates, Security-Patches und Weiterentwicklung nach dem Launch.</p>
+                        </div>
+                        <span class="card-number">04</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section style="padding: 6rem 0; text-align: center;">
+            <div class="container">
+                <div style="background: linear-gradient(180deg, #1a1a1a 0%, #050505 100%); border: 1px solid var(--border-light); border-radius: 30px; padding: 4rem 2rem;">
+                    <h2 style="font-size: clamp(2rem, 4vw, 3rem);">Bereit für den <span style="color: var(--accent-lime);">Launch?</span></h2>
+                    <p style="margin: 1.5rem auto 2.5rem; max-width: 500px;">Lassen Sie uns über Ihre Idee sprechen. Wir verwandeln Konzepte in klickbare Realität.</p>
+                    <a href="kontakt.html" class="btn btn-primary">Kostenloses Erstgespräch</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>Maria Steger Media</h4>
+                    <address class="address-box">
+                        Marktstraße 71<br>
+                        70372 Stuttgart<br>
+                        Deutschland
+                    </address>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li><a href="index.html">Startseite</a></li>
+                        <li><a href="ueber-uns.html">Über uns</a></li>
+                        <li><a href="leistungen.html">Leistungen</a></li>
+                        <li><a href="kontakt.html">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Expertise</h5>
+                    <ul>
+                        <li><a href="#">iOS Entwicklung</a></li>
+                        <li><a href="#">Android Entwicklung</a></li>
+                        <li><a href="#">UI Design</a></li>
+                        <li><a href="#">App Strategie</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Rechtliches</h5>
+                    <ul>
+                        <li><a href="impressum.html">Impressum</a></li>
+                        <li><a href="#">Datenschutz</a></li>
+                        <li><a href="#">AGB</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bottom-bar">
+                <p>&copy; 2026 Maria Steger Media. Alle Rechte vorbehalten.</p>
+                <p>Designed with 💜 in Stuttgart</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

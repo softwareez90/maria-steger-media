@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt | Maria Steger Media</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Palette: Deep Void Black with Electric Lime & Lavender Haze */
+            --bg-body: #050505;
+            --bg-card: #0F0F11;
+            --text-main: #E0E0E0;
+            --text-muted: #888890;
+            --accent-lime: #D4FF00;
+            --accent-purple: #9D8CFF;
+            --border-light: rgba(255, 255, 255, 0.08);
+            
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'Manrope', sans-serif;
+            
+            --spacing-container: 1400px;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* RESET & BASE */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 60ch;
+        }
+
+        /* UTILITIES */
+        .container {
+            width: 90%;
+            max-width: var(--spacing-container);
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-lime);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 255, 0, 0.2);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-light);
+            color: #fff;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            border-color: #fff;
+            background: #fff;
+            color: #000;
+        }
+
+        /* HEADER */
+        header {
+            padding: 2rem 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-lime);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            opacity: 1;
+            color: var(--accent-lime);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* MOBILE MENU TOGGLE (Hidden on desktop) */
+        .menu-toggle {
+            display: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        /* Abstract Background Glow */
+        .glow-bg {
+            position: absolute;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(157,140,255,0.15) 0%, rgba(5,5,5,0) 70%);
+            top: -20%;
+            right: -10%;
+            z-index: -1;
+            filter: blur(80px);
+            animation: pulse 10s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            text-align: center;
+            justify-items: center;
+        }
+
+        .hero-text h1 span {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+        }
+
+        .hero-text h1 em {
+            font-style: normal;
+            color: var(--accent-lime);
+        }
+
+        .hero-desc {
+            margin: 2rem auto 3rem auto;
+            font-size: 1.25rem;
+            line-height: 1.8;
+            max-width: 700px;
+        }
+
+        /* SEKTION: SERVICES (Bento Grid Layout) - ADAPTED FOR CONTACT */
+        .contact-section {
+            padding: 2rem 0 8rem 0;
+            position: relative;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            gap: 1.5rem;
+        }
+
+        .grid-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-card:hover {
+            border-color: var(--accent-lime);
+            background: #141416;
+        }
+
+        .grid-card h3 {
+            font-size: 1.75rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 1rem;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-lime);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Specific Card Styling for Contact */
+        .grid-card.form-card { 
+            grid-column: span 2; 
+            grid-row: span 2;
+        }
+        
+        .grid-card.info-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #050505 100%);
+        }
+
+        .grid-card.cta-card {
+            background: var(--accent-purple);
+            color: #000;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .grid-card.cta-card h3,
+        .grid-card.cta-card p {
+            color: #000;
+        }
+        
+        .contact-detail {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-detail h4 {
+            color: var(--accent-lime);
+            font-family: var(--font-display);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .card-number {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            position: absolute;
+            bottom: -10px;
+            right: 10px;
+            opacity: 0.1;
+            font-weight: 800;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 6rem 0 2rem 0;
+            border-top: 1px solid var(--border-light);
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand h4 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .footer-col h5 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-lime);
+            padding-left: 5px;
+        }
+
+        .address-box {
+            font-style: normal;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .bottom-bar {
+            border-top: 1px solid var(--border-light);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            h1 { font-size: 4rem; }
+            .grid-layout {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-card.form-card { grid-column: span 2; }
+            .grid-card.cta-card { grid-column: span 2; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Simplified mobile menu */
+            .menu-toggle { display: block; }
+            
+            .hero { min-height: 60vh; }
+            
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid-card.form-card { grid-column: span 1; grid-row: auto; }
+            .grid-card.cta-card { grid-column: span 1; }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    MS<span>M</span> Media
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="ueber-uns.html">Über uns</a></li>
+                    <li><a href="leistungen.html">Leistungen</a></li>
+                    <li><a href="kontakt.html" class="active">Kontakt</a></li>
+                </ul>
+                <div class="menu-toggle">☰</div>
+                <a href="kontakt.html" class="btn btn-outline" style="display: none; @media(min-width: 768px){display:inline-flex;}">Projekt starten</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="glow-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Lust auf <span>Innovation?</span></h1>
+                    <p class="hero-desc">
+                        Haben Sie eine Vision, die die digitale Welt verändern könnte? Wir sind bereit, sie Wirklichkeit werden zu lassen. Erzählen Sie uns von Ihrem Projekt.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT GRID SECTION -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="grid-layout">
+                
+                <!-- Card 1: Contact Form -->
+                <div class="grid-card form-card">
+                    <h3>Nachricht senden</h3>
+                    <form action="#" method="POST">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" class="form-input" placeholder="Ihr Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">E-Mail</label>
+                                <input type="email" id="email" class="form-input" placeholder="name@firma.de">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Thema</label>
+                            <input type="text" id="subject" class="form-input" placeholder="Worum geht es? (z.B. App Entwicklung)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="form-label">Nachricht</label>
+                            <textarea id="message" class="form-textarea" placeholder="Erzählen Sie uns mehr über Ihr Vorhaben..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Absenden</button>
+                    </form>
+                    <div class="card-number">01</div>
+                </div>
+
+                <!-- Card 2: Contact Info -->
+                <div class="grid-card info-card">
+                    <h3>Kontaktdaten</h3>
+                    
+                    <div class="contact-detail">
+                        <h4>Büro</h4>
+                        <p>Maria Steger Media<br>Marktstraße 71<br>70372 Stuttgart</p>
+                    </div>
+
+                    <div class="contact-detail">
+                        <h4>Direkt</h4>
+                        <p><a href="mailto:hello@mariastegermedia.de" style="color: #fff;">hello@mariastegermedia.de</a></p>
+                        <p><a href="tel:+497111234567" style="color: #fff;">+49 (0) 711 123 45 67</a></p>
+                    </div>
+
+                    <div class="contact-detail">
+                        <h4>Socials</h4>
+                        <p>LinkedIn / Instagram / GitHub</p>
+                    </div>
+                    
+                    <div class="card-number">02</div>
+                </div>
+
+                <!-- Card 3: Status / CTA -->
+                <div class="grid-card cta-card">
+                    <h3>Status</h3>
+                    <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">🟢 Verfügbar für neue Projekte</p>
+                    <p>Lassen Sie uns gemeinsam etwas Großartiges erschaffen. Der Kaffee geht auf uns.</p>
+                    <div class="card-number">03</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>Maria Steger Media</h4>
+                    <address class="address-box">
+                        Marktstraße 71<br>
+                        70372 Stuttgart<br>
+                        Deutschland
+                    </address>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li><a href="index.html">Startseite</a></li>
+                        <li><a href="ueber-uns.html">Über uns</a></li>
+                        <li><a href="leistungen.html">Leistungen</a></li>
+                        <li><a href="kontakt.html">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Expertise</h5>
+                    <ul>
+                        <li><a href="#">iOS Entwicklung</a></li>
+                        <li><a href="#">Android Entwicklung</a></li>
+                        <li><a href="#">UI Design</a></li>
+                        <li><a href="#">App Strategie</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Rechtliches</h5>
+                    <ul>
+                        <li><a href="impressum.html">Impressum</a></li>
+                        <li><a href="#">Datenschutz</a></li>
+                        <li><a href="#">AGB</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bottom-bar">
+                <p>&copy; 2026 Maria Steger Media. Alle Rechte vorbehalten.</p>
+                <p>Designed with 💜 in Stuttgart</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
